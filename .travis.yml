@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+ - "lts/*"
+install:
+  - pip install --user mkdocs
+  - npm install gh-pages
+script:
+  - mkdocs build --clean
+after_success:
+  - echo ${CUSTOM_DOMAIN} > site/CNAME
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  on:
+    branch: mkdocs
+  local-dir: site
+  target-branch: master
